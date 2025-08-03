@@ -12,7 +12,7 @@ public class App {
 
             Map<Integer, Point> brickmap = brick.getBrickMap(0); // Example to get a brick variant
 
-            frame.add(new BrickPanel(brickmap)); // Replace null with actual brickMap when available
+            frame.add(new BrickPanel(brickmap, 1, 1)); // Replace null with actual brickMap when available
         });
     }
 }
