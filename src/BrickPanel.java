@@ -5,6 +5,7 @@ import java.awt.event.KeyListener;
 import java.util.Map;
 
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 public class BrickPanel extends JPanel implements KeyListener {
     private final Map<Integer, Point> brickMap;
@@ -13,11 +14,19 @@ public class BrickPanel extends JPanel implements KeyListener {
     private int x = 3;
     private int y = 0;
 
+    private final Timer timer; // Timer for moving the brick down
+
     public BrickPanel(Brick brick) {
         this.brickMap = brick.getBrickMap(0); // Default to variant 0
 
         setFocusable(true); // Make the panel focusable to receive key events
         addKeyListener(this);
+
+        timer = new Timer(500, _ -> {
+            this.y++;
+            repaint(); // Repaint the panel to reflect the changes
+        });
+        timer.start(); // Start the timer to move the brick down
     }
 
     @Override // Draw the bricks on the panel
