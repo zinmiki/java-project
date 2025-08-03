@@ -1,6 +1,7 @@
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.Map;
+import javax.swing.Timer;
 
 import javax.swing.JPanel;
 
@@ -10,12 +11,25 @@ public class BrickPanel extends JPanel implements java.awt.event.KeyListener {
     private int x;
     private int y;
 
+    private final Timer timer;
+
     public BrickPanel(Map<Integer, Point> brickMap, int x, int y) {
         this.brickMap = brickMap;
         this.x = x;
         this.y = y;
         setFocusable(true);
         addKeyListener(this);
+        
+        timer = new Timer(500, _ -> {
+            this.y++;
+            repaint(); // Repaint the panel to reflect the changes
+            
+            // Check if the brick has reached the bottom of the panel
+            if (this.y > 12) {
+                this.y = 0; // Reset to top if it goes beyond the limit
+            }
+        });
+        timer.start(); // Start the timer to move the brick down every 500 milliseconds
     }
 
     @Override
