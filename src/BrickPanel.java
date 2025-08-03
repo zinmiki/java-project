@@ -10,6 +10,7 @@ public class BrickPanel extends JPanel implements java.awt.event.KeyListener {
     private final int GRID_SIZE = 40; // Size of each grid cell in pixels
     private int x;
     private int y;
+    private boolean moveable = true; // Flag to check if the brick can move
 
     private final Timer timer;
 
@@ -25,8 +26,9 @@ public class BrickPanel extends JPanel implements java.awt.event.KeyListener {
             repaint(); // Repaint the panel to reflect the changes
             
             // Check if the brick has reached the bottom of the panel
-            if (this.y > 12) {
-                this.y = 0; // Reset to top if it goes beyond the limit
+            if (this.y + getBrickHeight() > 14) {
+                this.y = 14 - getBrickHeight(); // Stop at the bottom
+                moveable = false; // Stop moving the brick
             }
         });
         timer.start(); // Start the timer to move the brick down every 500 milliseconds
@@ -34,11 +36,24 @@ public class BrickPanel extends JPanel implements java.awt.event.KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_LEFT -> x--;
-            case KeyEvent.VK_RIGHT -> x++;
+        if (moveable) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_LEFT -> x--;
+                case KeyEvent.VK_RIGHT -> x++;
+                case KeyEvent.VK_DOWN -> y++;
+            }
+            repaint(); // Repaint the panel to reflect the changes
         }
-        repaint(); // Repaint the panel to reflect the changes
+    }
+
+    public int getBrickHeight() {
+        int maxY = 0;
+        for (Point point : brickMap.values()) {
+            if (point.y > maxY) {
+                maxY = point.y;
+            }
+        }
+        return maxY + 1; // Return the height of the brick
     }
 
     // Not used but required by KeyListener interface
