@@ -47,4 +47,8 @@ public class Brick {
         variant4.put(3, new Point(2, 0));
         bricksMap.put(4, variant4);
     }
+
+    public Map<Integer, Point> getBrickMap(int variant) {
+        return bricksMap.get(variant);
+    }
 }

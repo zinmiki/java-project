@@ -5,6 +5,9 @@ public class App {
         EventQueue.invokeLater(() -> {
             Frame frame = new Frame();
             frame.setVisible(true);
+
+            Brick brick = new Brick();
+            frame.add(new BrickPanel(brick)); // Add the BrickPanel to the Frame
         });
     }
 }
